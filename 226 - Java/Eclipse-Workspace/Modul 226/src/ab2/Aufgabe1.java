@@ -1,4 +1,4 @@
-package ab20;
+package ab2;
 
 import utils.InputReader;
 import utils.Outputter;
