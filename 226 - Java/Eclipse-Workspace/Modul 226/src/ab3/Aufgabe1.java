@@ -1,12 +1,34 @@
 package ab3;
 
+import utils.CSVOutputter;
+import utils.Outputter;
+
 public class Aufgabe1 {
 
 	/**
 	 * @param args
 	 */
 	public static void main(String[] args) {
+		Outputter.aufgabe("a", 0);
+		aufgabe_a();
+		Outputter.aufgabe("b", 0);
 		aufgabe_b();
+		
+		CSVOutputter t  = new CSVOutputter("testfile.csv");
+		Double[][] s = t.load();
+		for (String title : t.titles()) {
+			System.out.print(title+"\t");
+		}
+		System.out.print("\n");
+		for (Double[] line : s) {
+			for (int i = 0; i < line.length; i++) {
+				if (i > 0) {
+					System.out.print("\t");
+				}
+				System.out.print(line[i]);
+			}
+			System.out.print("\n");
+		}
 	}
 	
 	
@@ -17,6 +39,12 @@ public class Aufgabe1 {
 			results[i-1][0] = 4*aufgabe_b_leibniz((int)Math.pow(10,i));
 			results[i-1][1] = Math.PI - results[i-1][0];
 		}
+		CSVOutputter output = new CSVOutputter("testfile.csv");
+		output.setTitle("Schritte","Pi","Abweichung");
+		for (int i = 0; i<max_steps_exponent; i++) {
+			output.addValue(Math.pow(10,i),String.format("%.8f",results[i][0]), String.format("%.8f",results[i][1]));
+		}
+		output.save();
 		System.out.println("Schritte\tPi\t\tAbweichung");
 		for (int i = 1; i<=max_steps_exponent; i++) {
 			System.out.println(String.format("10^%s\t\t%.8f\t%.8f",i,results[i-1][0],results[i-1][1]));
@@ -47,6 +75,7 @@ public class Aufgabe1 {
 		}
 		}
 		System.out.print("]\n");
+
 		aufgabe_a(noten);
 	}
 	
