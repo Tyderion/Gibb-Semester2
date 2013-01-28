@@ -9,8 +9,6 @@ public class InputReader {
 	public static String getLine() {
 		String str = null;
 		BufferedReader d = new BufferedReader(new InputStreamReader(System.in));
-
-		// String einlesen
 		try
 		{
 			str = d.readLine();
@@ -30,13 +28,21 @@ public class InputReader {
 	public static int getInt(){
 		return (Integer)get_as("integer");
 	}
+	public static long getLong(){
+		return (Long)get_as("long");
+	}
 	public static int getInt(String what){
 		System.out.println(what);
 		return getInt();
 	}
+
+	
+	public static String parseError(String type) {
+		return "This is no parsable number of type "+type+". Please try again.";
+	}
 	
 	
-	public static Object get_as(String type) {//throws IllegalArgumentException {
+	public static Object get_as(String type) throws IllegalArgumentException {
 		Object result = null;
 		switch(type) {
 		case "int":
@@ -46,7 +52,7 @@ public class InputReader {
 				try {
 					result = Integer.parseInt(getLine());
 				} catch (NumberFormatException e) {
-					System.out.println("This is no parsable number (Integer). Please try again.");
+					System.out.println(InputReader.parseError("Integer"));
 				}
 			}
 			
@@ -58,7 +64,7 @@ public class InputReader {
 				try {
 					result = Double.parseDouble(getLine());
 				} catch (NumberFormatException e) {
-					System.out.println("This is no parsable number (Double). Please try again.");
+					System.out.println(InputReader.parseError("Double"));
 				}
 			}
 			return result;
@@ -68,7 +74,18 @@ public class InputReader {
 				try {
 					result = Float.parseFloat(getLine());
 				} catch (NumberFormatException e) {
-					System.out.println("This is no parsable number (Float). Please try again.");
+					System.out.println(InputReader.parseError("Float"));
+				}
+			}
+			
+			return result;
+		case "long":
+		case "Long":
+			while (result == null) {
+				try {
+					result = Long.parseLong(getLine());
+				} catch (NumberFormatException e) {
+					System.out.println(InputReader.parseError("Long"));
 				}
 			}
 			
@@ -78,9 +95,7 @@ public class InputReader {
 		case "String":
 			return getLine();
 		default:
-			//throw new IllegalArgumentException(str+" does not correspond to a type or is not programmed to be.");
-			System.out.println((type+" does not correspond to a type or is not programmed to be."));
-			return null;
+			throw new IllegalArgumentException(type+" does not correspond to a type.");
 		}
 		
 		

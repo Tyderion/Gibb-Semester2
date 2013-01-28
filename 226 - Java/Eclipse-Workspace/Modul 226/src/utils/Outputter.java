@@ -3,7 +3,7 @@ package utils;
 public class Outputter {
 	
 	public static void aufgabe(String postfix, int number_of_inputs) {
-		String output = "Aufgabe "+postfix+": ";
+		String output = "\nAufgabe "+postfix+": ";
 		switch (number_of_inputs) {
 		case 0:
 			break;

@@ -91,7 +91,7 @@ public class Aufgabe1 {
 		return result.toString();
 	}
 	
-	private static String aufgabe_e_15_prime_factors(int number) {
+	private static String aufgabe_e_15_prime_factors(Long number) {
 		StringBuilder result = new StringBuilder();
 		int factor = 2;
 		while (number  > 1) {
@@ -113,22 +113,29 @@ public class Aufgabe1 {
 	 * @param args
 	 */
 	public static void main(String[] args) {
-		Outputter.aufgabe("a", 0);
-		System.out.println(aufgabe_a());
-		Outputter.aufgabe("b 2er Potenz", 1);
-		System.out.println(aufgabe_b(InputReader.getDouble()));
-		Outputter.aufgabe("c GGT", 2);
-		System.out.println(aufgabe_c(InputReader.getInt(),InputReader.getInt()));
-		Outputter.aufgabe("d Treppe", 2);
-		System.out.println(aufgabe_d(InputReader.getInt("b"),InputReader.getInt("h")));
-		Outputter.aufgabe("e_10 Binärdarstellung", 1);
-		System.out.println(aufgabe_e_10(InputReader.getInt()));
-		Outputter.aufgabe("e_12 Fakultät", 1);
-		aufgabe_e_12_factorial(InputReader.getInt());
-		Outputter.aufgabe("e_13 Einmaleins", 0);
-		System.out.println(aufgabe_e_13());
-		Outputter.aufgabe("e_15 Primärfaktoren", 1);
-		System.out.println(aufgabe_e_15_prime_factors(InputReader.getInt()));
+		int a = 10;
+		int b = 3;
+		double c = 3.0;
+		byte n = 3;
+		float f = 9f;
+		
+		System.out.println((a&n*n));
+//		Outputter.aufgabe("a", 0);
+//		System.out.println(aufgabe_a());
+//		Outputter.aufgabe("b 2er Potenz", 1);
+//		System.out.println(aufgabe_b(InputReader.getDouble()));
+//		Outputter.aufgabe("c GGT", 2);
+//		System.out.println(aufgabe_c(InputReader.getInt(),InputReader.getInt()));
+//		Outputter.aufgabe("d Treppe", 2);
+//		System.out.println(aufgabe_d(InputReader.getInt("b"),InputReader.getInt("h")));
+//		Outputter.aufgabe("e_10 Binärdarstellung", 1);
+//		System.out.println(aufgabe_e_10(InputReader.getInt()));
+//		Outputter.aufgabe("e_12 Fakultät", 1);
+//		System.out.println(aufgabe_e_12_factorial(InputReader.getInt()));
+//		Outputter.aufgabe("e_13 Einmaleins", 0);
+//		System.out.println(aufgabe_e_13());
+//		Outputter.aufgabe("e_15 Primärfaktoren", 1);
+//		System.out.println(aufgabe_e_15_prime_factors(InputReader.getLong()));
 	}
 	
 }
