@@ -22,14 +22,22 @@ public class Aufgabe1 {
 	
 	private static int aufgabe_b(double number) {
 		int power_of_two = 1;
-		int n = 1;
+		int exponent = 0;
 		while (power_of_two <= number) {
 			//power_of_two *= 2;
 			power_of_two <<= 1;
-			n++;
+			exponent++;
 		}
-		return n;
+		return exponent;
 	}
+	
+	private static int aufgabe_b_alternativ(double number) {
+		int exponent = 0;
+		int power_of_two = 1;
+		for (; power_of_two <= number;exponent++,power_of_two <<= 1);
+		return exponent;
+	}
+	
 	
 	private static int aufgabe_c(int p, int q) {
 		if (p < q) {
@@ -117,7 +125,7 @@ public class Aufgabe1 {
 		Outputter.aufgabe("a", 0);
 		System.out.println(aufgabe_a());
 		Outputter.aufgabe("b 2er Potenz", 1);
-		System.out.println(aufgabe_b(InputReader.getDouble()));
+		System.out.println(aufgabe_b_alternativ(InputReader.getDouble()));
 		Outputter.aufgabe("c GGT", 2);
 		System.out.println(aufgabe_c(InputReader.getInt(),InputReader.getInt()));
 		Outputter.aufgabe("d Treppe", 2);
