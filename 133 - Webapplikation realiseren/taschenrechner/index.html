@@ -64,7 +64,7 @@ function loadResult()
   var result=getCookie(COOKIE_NAME);
   if (result!=null && result!="")
   {
-    window.document.Rechner.Display.value = result
+    setValue(result)
   }
 
   setInterval(function() {
@@ -117,6 +117,9 @@ function saveResult()
 window.onbeforeunload = saveResult
 window.onload = loadResult
 
+function setValue(value) {
+  window.document.Rechner.Display.value = value
+}
 
 function validate(input) {
 	return /^[0-9-+*\/.]+$/.test(input)
@@ -125,8 +128,14 @@ function validate(input) {
 function calculateResult() {
   var x = 0
   if (validate(window.document.Rechner.Display.value))
-    x = eval(window.document.Rechner.Display.value)
-  window.document.Rechner.Display.value = round(x)
+    try {
+      x = eval(window.document.Rechner.Display.value)
+      setValue(round(x))
+    } catch (e) {
+      console.log( e)
+      setValue("Syntax Error")
+    }
+  
 }
 
 function round(num) {
@@ -139,35 +148,39 @@ function add (char) {
 
 function specials (func) {
 	var x = 0
-  x = eval(window.document.Rechner.Display.value)
+  try {
+    x = eval(window.document.Rechner.Display.value)
+  } catch (e) {
+    console.log( e)
+  }
   var display = window.document.Rechner.Display
-  if (validate(window.document.Rechner.Display.value)) {
+  if (validate(display.value)) {
     if (func == "sqrt") {
-      display.value = round(Math.sqrt(x))
+      setValue(round(Math.sqrt(x)))
     }
     if (func == "pow") {
-      display.value = round(x * x)
+      setValue(round(x * x))
     }
     if (func == "ln") {
-      display.value = round(Math.log(x))
+      setValue(round(Math.log(x)))
     }
     if (func == "sin") {
-      display.value =round(Math.sin(Math.PI/180 * x))
+      setValue(round(Math.sin(Math.PI/180 * x)))
     }
     if (func == "cos") {
-      display.value = round(Math.cos(Math.PI/180 * x))
+      setValue(round(Math.cos(Math.PI/180 * x)))
     }
     if (func == "tan") {
-      display.value = round(Math.tan(Math.PI/180 * x))
+      setValue(round(Math.tan(Math.PI/180 * x)))
     }
     if (func == "2^x") {
       //Using a timeout to make it stay in the Display... Don't know why it does not work directly here.
       setTimeout(function() {
-        display.value = round(Math.pow(2,x))
+        setValue(round(Math.pow(2,x)))
       }, 0)
     }
   } else {
-    window.document.Rechner.Display.value = 0
+    windowsetValue(0)
   }
 }
 </script>
