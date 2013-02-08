@@ -106,14 +106,18 @@ function validate(input) {
 
 function calculateResult() {
   var x = 0
-  if (validate(getValue()))
-    try { //If there is a syntax error (e.g. 2**4 or 2++2 ...)
+  if (validate(getValue())) {
+    try { 
+    //If there is a syntax error (e.g. 2**4 or 2++2 ...)
       x = eval(getValue())
       setValue(round(x))
     } catch (e) {
       // Tell the user it is a syntax error
       setError(e)
     }
+  } else {
+    setValue('')
+  }
   
 }
 
@@ -153,8 +157,9 @@ function degreeToRadian(num) {
 function specials (func) {
 	var x = 0
   try { //If there is a syntax error (e.g. 2**4 or 2++2 ...)
-    x = eval(getValue())
+    
     if (validate(x)) {
+      x = eval(getValue())
       if (func == "sqrt") {
         setValue(round(Math.sqrt(x)))
       }
@@ -322,8 +327,8 @@ function specials (func) {
                   <td rowspan="2" id='submit'><input type="button" class="button" value="  =  "  onclick="calculateResult()"></td>
                 </tr>
                 <tr>
-                  <td><input type="button" class="button" value=" ( " onclick="specials('(')"></td>
-                  <td><input type="button"  class="button" value=" ) " onclick="specials(')')"></td>
+                  <td><input type="button" class="button" value=" ( " onclick="add('(')"></td>
+                  <td><input type="button"  class="button" value=" ) " onclick="add(')')"></td>
                   <td><input type="button" class="button" value="  /   " onclick="add('/')"></td>
                 </tr>
 
