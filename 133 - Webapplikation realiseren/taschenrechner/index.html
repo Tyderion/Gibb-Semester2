@@ -167,10 +167,7 @@ function specials (func) {
       setValue(round(Math.tan(Math.PI/180 * x)))
     }
     if (func == "2^x") {
-      //Using a timeout to make it stay in the Display... Don't know why it does not work directly here.
-      setTimeout(function() {
-        setValue(round(Math.pow(2,x)))
-      }, 0)
+      setValue(round(Math.pow(2,x)))
     }
   } else {
     windowsetValue(0)
@@ -252,40 +249,40 @@ function specials (func) {
             <td  bgcolor="#E0E0E0">
               <table border="0" cellpadding="0" cellspacing="2">
                 <tr>
-                  <td><input type="button" width="60" class="button" value="  7   " onclick="add('7')"></td>
-                  <td><input type="button" width="60" class="button" value="  8   " onclick="add('8')"></td>
-                  <td><input type="button" width="60" class="button" value="  9   " onclick="add('9')"></td>
-                  <td><input type="button" width="60" class="button" value="  +   " onclick="add('+')"></td>
+                  <td><input type="button" class="button" value="  7   " onclick="add('7')"></td>
+                  <td><input type="button" class="button" value="  8   " onclick="add('8')"></td>
+                  <td><input type="button" class="button" value="  9   " onclick="add('9')"></td>
+                  <td><input type="button" class="button" value="  +   " onclick="add('+')"></td>
                 </tr>
                 <tr>
-                  <td><input type="button" width="60" class="button" value="  4   " onclick="add('4')"></td>
-                  <td><input type="button" width="60" class="button" value="  5   " onclick="add('5')"></td>
-                  <td><input type="button" width="60" class="button" value="  6   " onclick="add('6')"></td>
-                  <td><input type="button" width="60" class="button" value="  -   " onclick="add('-')"></td>
+                  <td><input type="button" class="button" value="  4   " onclick="add('4')"></td>
+                  <td><input type="button" class="button" value="  5   " onclick="add('5')"></td>
+                  <td><input type="button" class="button" value="  6   " onclick="add('6')"></td>
+                  <td><input type="button" class="button" value="  -   " onclick="add('-')"></td>
                 </tr>
                 <tr>
-                  <td><input type="button" width="60" class="button" value="  1   " onclick="add('1')"></td>
-                  <td><input type="button" width="60" class="button" value="  2   " onclick="add('2')"></td>
-                  <td><input type="button" width="60" class="button" value="  3   " onclick="add('3')"></td>
-                  <td><input type="button" width="60" class="button" value="  *   " onclick="add('*')"></td>
+                  <td><input type="button" class="button" value="  1   " onclick="add('1')"></td>
+                  <td><input type="button" class="button" value="  2   " onclick="add('2')"></td>
+                  <td><input type="button" class="button" value="  3   " onclick="add('3')"></td>
+                  <td><input type="button" class="button" value="  *   " onclick="add('*')"></td>
                 </tr>
                 <tr>
-                  <td><input type="button" width="60" class="button" value="  0   " onclick="add('0')"></td>
-                  <td><input type="button" width="60" class="button" value="  .   " onclick="add('.')"></td>
-                  <td><input type="button" width="60" class="button" value="  =   " onclick="calculateResult()"></td>
-                  <td><input type="button" width="60" class="button" value="  /   " onclick="add('/')"></td>
+                  <td><input type="button" class="button" value="  0   " onclick="add('0')"></td>
+                  <td><input type="button" class="button" value="  .   " onclick="add('.')"></td>
+                  <td><input type="button" class="button" value="  =   " onclick="calculateResult()"></td>
+                  <td><input type="button" class="button" value="  /   " onclick="add('/')"></td>
                 </tr>
                 <tr>
-                  <td><input type="button" width="60" class="button" value=" sin " onclick="specials('sin')"></td>
-                  <td><input type="button" width="60" class="button" value=" cos " onclick="specials('cos')"></td>
-                  <td><input type="button" width="60" class="button" value=" tan " onclick="specials('tan')"></td>
-                  <td><input type="reset"  width="60" class="button" value=" 2^x " onclick="specials('2^x')"></td>
+                  <td><input type="button" class="button" value=" sin " onclick="specials('sin')"></td>
+                  <td><input type="button" class="button" value=" cos " onclick="specials('cos')"></td>
+                  <td><input type="button" class="button" value=" tan " onclick="specials('tan')"></td>
+                  <td><input type="button"  class="button" value=" 2^x " onclick="specials('2^x')"></td>
                 </tr>
                 <tr>
-                  <td><input type="button" width="60" class="button" value="sqrt " onclick="specials('sqrt')"></td>
-                  <td><input type="button" width="60" class="button" value=" x² " onclick="specials('pow')"></td>
-                  <td><input type="button" width="60" class="button" value=" ln " onclick="specials('ln')"></td>
-                  <td><input type="reset"  width="60" class="button" value="  C  "></td>
+                  <td><input type="button" class="button" value="sqrt " onclick="specials('sqrt')"></td>
+                  <td><input type="button" class="button" value=" x² " onclick="specials('pow')"></td>
+                  <td><input type="button" class="button" value=" ln " onclick="specials('ln')"></td>
+                  <td><input type="reset"  class="button" value="  C  "></td>
                 </tr>
               </table>
             </td></tr></table>
