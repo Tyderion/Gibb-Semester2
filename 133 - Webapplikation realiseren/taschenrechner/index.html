@@ -96,7 +96,7 @@ function setValue(value) {
 }
 
 function validate(input) {
-	return /^[0-9-+*\/.]+$/.test(input)
+	return /^[0-9-+*\/.()]+$/.test(input)
 }
 
 function calculateResult() {
@@ -106,8 +106,8 @@ function calculateResult() {
       x = eval(window.document.Rechner.Display.value)
       setValue(round(x))
     } catch (e) {
-      console.log( e)
-      setValue("Syntax Error")
+      //console.log( e)
+      setValue("Syntax Error:"+window.document.Rechner.Display.value)
     }
   
 }
@@ -118,6 +118,26 @@ function round(num) {
 
 function add (char) {
   window.document.Rechner.Display.value = window.document.Rechner.Display.value + char
+}
+
+function useKeypresses(e) {
+    if (e.charCode > 40 )
+    {
+      add(String.fromCharCode(e.charCode))
+    }
+    if (e.charCode == 0)
+      switch(e.keyCode) {
+        case 8:
+          window.document.Rechner.Display.value = window.document.Rechner.Display.value.slice(0,-1)
+          break
+        case 110:
+          add('.')
+          break
+        case 13:
+          calculateResult()
+          break
+
+      }
 }
 
 function specials (func) {
@@ -212,7 +232,7 @@ function specials (func) {
 
 
 </head> 
-<body id="index" class="home"> 
+<body id="index" class="home" onkeypress="useKeypresses(event)" > 
 
   <body bgcolor="#FFFFE0">
 
@@ -226,7 +246,7 @@ function specials (func) {
         <tr>
           <td bgcolor="#C0C0C0">
             <input type="text" name="Visited" align="left" class="visit">
-            <input type="text" name="Display" align="right" class="display">
+            <input type="text" name="Display" align="right" class="display ">
           </td>
           </tr>
 
