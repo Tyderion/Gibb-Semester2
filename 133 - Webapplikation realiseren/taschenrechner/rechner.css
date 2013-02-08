@@ -1,37 +1,57 @@
-
-
+table {
+  margin-left: auto;
+  margin-right: auto;
+}
 .button {
-  border: 2px solid black;
-  border-radius: 3px;
-  background-color: lightgray;
-  margin: 2px;
-  float:left;
-  clear: none;
-  width: 30px;
-  height: 25px;
-  text-align: center;
-  vertical-align: middle;
-
-  /* Disable selecting of text when double clicking a text with all correct CSS variations
-  see http://stackoverflow.com/questions/826782/css-rule-to-disable-text-selection-highlighting */
-  -webkit-touch-callout: none;
-  -webkit-user-select: none;
-  -khtml-user-select: none;
-  -moz-user-select: none;
-  -ms-user-select: none;
-  user-select: none;
-
-
+  width:60px;
+  text-align:center;
+  font-family:System,sans-serif;
+  font-size:100%;
 }
-.button:hover {
-  cursor: pointer;
+.display {
+  width: 243px;
+  text-align:right;
+  font-family:System,sans-serif;
+  font-size:100%;
+  margin-left: 2px;
+  margin-top: 5px;
+  color: black;
 }
-.button:active {
-  background-color: gray;
+.date {
+  width:243px;
+  text-align:right;
+  font-family:System,sans-serif;
+  font-size:100%;
+  float: right;
+  padding-right: 2px;
+  margin-top: 5px;
+  margin-right: 2px;
+  color: black;
+  background: white;
 }
-
-.column {
+.visit {
+  width:70px;
+  text-align:right;
+  font-family:System,sans-serif;
+  font-size:100%;
+  float: right;
+  margin-top: 5px;
+  margin-left: 1px;
+  padding-right: 5px;
+  margin-right: 5px;
+  color: black;
+  background: white;
+}
+#submit, #reset {
+  height: 200%;
+}
+#submit > input, #reset > input {
+  height: 50px;
+}
+input {
+  border: 1px gray solid;
+}
+label {
   float: left;
-  clear: both;
-  width: 200px;
+  padding: 5px;
 }
