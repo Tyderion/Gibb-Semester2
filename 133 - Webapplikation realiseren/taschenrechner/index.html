@@ -68,38 +68,12 @@ function loadResult()
   }
 
   setInterval(function() {
-    window.document.Rechner.Date.value = new Date().toDisplay()
-    window.document.Rechner.Visited.value = ((new Date() - LOAD_TIME)/1000).toHHMMSS()
+    window.document.Rechner.Date.value = new Date().toLocaleString()
+    // Subtracking 3600*1000ms = 1 Hour because of GMT offset (I guess....)
+    window.document.Rechner.Visited.value = new Date(new Date() - LOAD_TIME-3600*1000).toTimeString().slice(0,8)
   }, 200)
 }
 
-function pad(num) {
-  return ("0"+num).slice(-2)
-}
-
-Date.prototype.toDisplay = function () {
-    var day = pad(this.getDay())
-    var month = pad(this.getMonth())
-    var year = this.getYear()+1900 // Only years since 1900 are counted...
-    var hours   = pad(this.getHours())
-    var minutes = pad(this.getMinutes())
-    var seconds = pad(this.getSeconds())
-    var date    = day+"."+month+"."+year+", "+hours+':'+minutes+':'+seconds;
-    return date;
-}
-
-Number.prototype.toHHMMSS = function () {
-    var seconds = Math.floor(this),
-        hours = Math.floor(seconds / 3600);
-    seconds -= hours*3600;
-    var minutes = Math.floor(seconds / 60);
-    seconds -= minutes*60;
-
-    if (hours   < 10) {hours   = "0"+hours;}
-    if (minutes < 10) {minutes = "0"+minutes;}
-    if (seconds < 10) {seconds = "0"+seconds;}
-    return hours+':'+minutes+':'+seconds;
-}
 
 function saveResult()
 {
@@ -185,6 +159,10 @@ function specials (func) {
 }
 </script>
 <style type="text/css">
+  table {
+    margin-left: auto;
+    margin-right: auto;
+  }
   .button {  
     width:60px;
     text-align:center;
@@ -192,30 +170,33 @@ function specials (func) {
     font-size:100%;
   }
   .display { 
-    width: 243px;
+    width: 158px;
     text-align:right; 
     font-family:System,sans-serif;  
     font-size:100%;  
-    margin-left: 2px;
+    margin-left: 5px;
+    margin-top: 5px;
   }
   .date { 
-    width:150px;  
-     text-align:right;  
-     font-family:System,sans-serif;  
-     font-size:100%;  
-     float: right;  
-     padding-right: 2px;  
-     margin-top: 5px;  
-     margin-right: 4px;
+    width:243px;  
+    text-align:right;  
+    font-family:System,sans-serif;  
+    font-size:100%;  
+    float: right;  
+    padding-right: 2px;  
+    margin-top: 5px;  
+    margin-right: 4px;
   }
   .visit { 
     width:70px;  
     text-align:right;  
     font-family:System,sans-serif;  
-    font-size:100%;   float: left;   
+    font-size:100%;   
+    float: left;   
     margin-top: 5px;  
     margin-left: 1px;  
-    padding-right: 3px;
+    padding-right: 5px;
+    margin-right: 5px;
   } 
   input {
     border: 1px gray solid;   
@@ -240,11 +221,13 @@ function specials (func) {
                   <tr>
           <td bgcolor="#C0C0C0">
             <input type="text" name="Date" align="right" class="date">
-            <input type="text" name="Visited" align="left" class="visit"></td>
+            </td>
           </tr>
         <tr>
           <td bgcolor="#C0C0C0">
-            <input type="text" name="Display" align="right" class="display"></td>
+            <input type="text" name="Visited" align="left" class="visit">
+            <input type="text" name="Display" align="right" class="display">
+          </td>
           </tr>
 
           <tr>
