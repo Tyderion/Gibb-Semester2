@@ -143,13 +143,13 @@ function specials (func) {
   var display = window.document.Rechner.Display
   if (validate(window.document.Rechner.Display.value)) {
     if (func == "sqrt") {
-      display.value = Math.sqrt(x)
+      display.value = round(Math.sqrt(x))
     }
     if (func == "pow") {
-      display.value = x * x
+      display.value = round(x * x)
     }
     if (func == "ln") {
-      display.value = Math.log(x)
+      display.value = round(Math.log(x))
     }
     if (func == "sin") {
       display.value =round(Math.sin(Math.PI/180 * x))
@@ -172,20 +172,42 @@ function specials (func) {
 }
 </script>
 <style type="text/css">
-.button {  width:60px; text-align:center;
- font-family:System,sans-serif;
- font-size:100%; }
- .display { width:240px; text-align:right;
-   font-family:System,sans-serif;
-   font-size:100%; }
-  .date { width:150px; text-align:right;
-   font-family:System,sans-serif;
-   font-size:100%;float: right;margin: 5px;}
-  .visit { width:70px; text-align:right;
-   font-family:System,sans-serif;
-   font-size:100%; float: left;
-   margin: 5px;} 
-   </style>
+  .button {  
+    width:60px;
+    text-align:center;
+    font-family:System,sans-serif;
+    font-size:100%;
+  }
+  .display { 
+    width: 243px;
+    text-align:right; 
+    font-family:System,sans-serif;  
+    font-size:100%;  
+    margin-left: 2px;
+  }
+  .date { 
+    width:150px;  
+     text-align:right;  
+     font-family:System,sans-serif;  
+     font-size:100%;  
+     float: right;  
+     padding-right: 2px;  
+     margin-top: 5px;  
+     margin-right: 4px;
+  }
+  .visit { 
+    width:70px;  
+    text-align:right;  
+    font-family:System,sans-serif;  
+    font-size:100%;   float: left;   
+    margin-top: 5px;  
+    margin-left: 1px;  
+    padding-right: 3px;
+  } 
+  input {
+    border: 1px gray solid;   
+  }
+  </style>
    <link rel="stylesheet" href="css/main.css" type="text/css" /> 
  <!--[if IE]> 
  <script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]--> 
