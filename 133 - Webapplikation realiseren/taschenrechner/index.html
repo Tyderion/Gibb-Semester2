@@ -34,26 +34,20 @@ Inhalt:
 */
 
 //Cookie functions take from: http://www.w3schools.com/js/js_cookies.asp
-function setCookie(c_name,value,exdays)
+function setCookie(cookie_name,value,daysUntilExpire)
 {
-  var exdate=new Date();
-  exdate.setDate(exdate.getDate() + exdays);
-  var c_value=escape(value) + ((exdays==null) ? "" : "; expires="+exdate.toUTCString());
-  document.cookie=c_name + "=" + c_value;
+  var expireDate=new Date();
+  expireDate.setDate(expireDate.getDate() + daysUntilExpire);
+  var c_value=encodeURIComponent(value) + ((daysUntilExpire==null) ? "" : "; expires="+expireDate.toUTCString());
+  document.cookie=cookie_name + "=" + c_value;
 }
 
-function getCookie(c_name)
+function getCookie(cookie_name)
 {
-  var i,x,y,ARRcookies=document.cookie.split(";");
-  for (i=0;i<ARRcookies.length;i++)
-  {
-    var cookie = ARRcookies[i].split("=")
-    x = cookie[0], y = cookie[1]
-    x = x.trim()
-    if (x==c_name)
-    {
-      return unescape(y);
-    }
+  var i, key_value, cookies = document.cookie.split(";");
+  for (i = 0; i < cookies.length; i++) {
+    key_value = cookies[i].split("=");
+    if (key_value[0].trim() == cookie_name) return decodeURIComponent(key_value[1])
   }
 }
 
@@ -65,17 +59,18 @@ function loadResult()
     setValue(result)
   }
 
+  //We update the clock and the time-passed display 5 times a second
   setInterval(function() {
-    window.document.Rechner.Date.value = new Date().toLocaleString()
+    window.document.Output.Date.value = new Date().toLocaleString()
     // Subtracking 3600*1000ms = 1 Hour because of GMT offset (I guess....)
-    window.document.Rechner.Visited.value = new Date(new Date() - LOAD_TIME-3600*1000).toTimeString().slice(0,8)
+    window.document.Time.Visited.value = new Date(new Date() - LOAD_TIME-3600*1000).toTimeString().slice(0,8)
   }, 200)
 }
 
 
 function saveResult()
 {
-  result=window.document.Rechner.Display.value
+  result=getValue()
   if (result!=null && result!="")
   {
     setCookie(COOKIE_NAME,result,365);
@@ -90,7 +85,19 @@ window.onbeforeunload = saveResult
 window.onload = loadResult
 
 function setValue(value) {
-  window.document.Rechner.Display.value = value
+  window.document.Output.Display.value = value
+}
+
+function getValue() {
+  return window.document.Output.Display.value
+}
+
+function reset() {
+  setValue('')
+}
+
+function setError(error) {
+  setValue(error.message+":"+ getValue())
 }
 
 function validate(input) {
@@ -99,13 +106,13 @@ function validate(input) {
 
 function calculateResult() {
   var x = 0
-  if (validate(window.document.Rechner.Display.value))
-    try {
-      x = eval(window.document.Rechner.Display.value)
+  if (validate(getValue()))
+    try { //If there is a syntax error (e.g. 2**4 or 2++2 ...)
+      x = eval(getValue())
       setValue(round(x))
     } catch (e) {
-      //console.log( e)
-      setValue("Syntax Error:"+window.document.Rechner.Display.value)
+      // Tell the user it is a syntax error
+      setError(e)
     }
   
 }
@@ -115,63 +122,70 @@ function round(num) {
 }
 
 function add (char) {
-  window.document.Rechner.Display.value = window.document.Rechner.Display.value + char
+  setValue(getValue() + char)
 }
 
 function useKeypresses(e) {
-    if (e.charCode >= 40 ) //40 = (
-    {
-      add(String.fromCharCode(e.charCode))
-    }
-    switch(e.keyCode) {
-        case 8:
-          window.document.Rechner.Display.value = window.document.Rechner.Display.value.slice(0,-1)
-          break
-        case 110:
-          add('.')
-          break
-        case 13:
-          calculateResult()
-          break
+  if (e.charCode >= 40 ) //40 = '('
+  {
+    add(String.fromCharCode(e.charCode))
+  }
+  switch(e.keyCode) {
+      case 8: //'backspace'
+        setValue(getValue().slice(0,-1))
+        break
+      case 110: //dot
+        add('.')
+        break
+      case 13: // enter
+        calculateResult()
+        break
+      case 46: // delete
+        setValue(getValue().slice(1))
+        break
+  }
+}
 
-      }
+function degreeToRadian(num) {
+  return Math.PI/180 * num
 }
 
 function specials (func) {
 	var x = 0
-  try {
-    x = eval(window.document.Rechner.Display.value)
+  try { //If there is a syntax error (e.g. 2**4 or 2++2 ...)
+    x = eval(getValue())
+    if (validate(x)) {
+      if (func == "sqrt") {
+        setValue(round(Math.sqrt(x)))
+      }
+      if (func == "pow") {
+        setValue(round(x * x))
+      }
+      if (func == "ln") {
+        setValue(round(Math.log(x)))
+      }
+      if (func == "sin") {
+        setValue(round(Math.sin(degreeToRadian(x))))
+      }
+      if (func == "cos") {
+        setValue(round(Math.cos(degreeToRadian(x))))
+      }
+      if (func == "tan") {
+        setValue(round(Math.tan(degreeToRadian(x))))
+      }
+      if (func == "2^x") {
+        setValue(round(Math.pow(2,x)))
+      }
+    } else {
+      setValue(0)
+    }
   } catch (e) {
-    console.log( e)
-  }
-  var display = window.document.Rechner.Display
-  if (validate(display.value)) {
-    if (func == "sqrt") {
-      setValue(round(Math.sqrt(x)))
-    }
-    if (func == "pow") {
-      setValue(round(x * x))
-    }
-    if (func == "ln") {
-      setValue(round(Math.log(x)))
-    }
-    if (func == "sin") {
-      setValue(round(Math.sin(Math.PI/180 * x)))
-    }
-    if (func == "cos") {
-      setValue(round(Math.cos(Math.PI/180 * x)))
-    }
-    if (func == "tan") {
-      setValue(round(Math.tan(Math.PI/180 * x)))
-    }
-    if (func == "2^x") {
-      setValue(round(Math.pow(2,x)))
-    }
-  } else {
-    windowsetValue(0)
+    // Tell the user it is a syntax error
+    setError(e)
   }
 }
 </script>
+
 <style type="text/css">
   table {
     margin-left: auto;
@@ -184,14 +198,13 @@ function specials (func) {
     font-size:100%;
   }
   .display { 
-    width: 158px;
+    width: 243px;
     text-align:right; 
     font-family:System,sans-serif;  
     font-size:100%;  
-    margin-left: 5px;
+    margin-left: 2px;
     margin-top: 5px;
     color: black;
-    bgcolor: #C0C0C0;
   }
   .date { 
     width:243px;  
@@ -201,7 +214,7 @@ function specials (func) {
     float: right;  
     padding-right: 2px;  
     margin-top: 5px;  
-    margin-right: 4px;
+    margin-right: 2px;
     color: black;
     background: white;
   }
@@ -210,7 +223,7 @@ function specials (func) {
     text-align:right;  
     font-family:System,sans-serif;  
     font-size:100%;   
-    float: left;   
+    float: right;   
     margin-top: 5px;  
     margin-left: 1px;  
     padding-right: 5px;
@@ -227,7 +240,13 @@ function specials (func) {
   input {
     border: 1px gray solid;   
   }
+  label {
+    float: left;
+    padding: 5px;
+  }
   </style>
+
+
  <!--[if IE]> 
  <script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]--> 
 <!--[if lte IE 7]> 
@@ -240,9 +259,9 @@ function specials (func) {
 <body id="index" class="home" onkeypress="useKeypresses(event)" > 
 
   <body bgcolor="#FFFFE0">
-
-    <form name="Rechner" action="" onsubmit="calculateResult();return false;">
+    
       <table border="5" cellpadding="10" cellspacing="0">
+        <form name="Output">
                   <tr>
           <td bgcolor="#C0C0C0">
             <input type="text" name="Date" align="right" class="date" disabled: disabled>
@@ -250,19 +269,25 @@ function specials (func) {
           </tr>
         <tr>
           <td bgcolor="#C0C0C0">
-            <input type="text" name="Visited" align="left" class="visit" disabled: disabled>
+            
             <input type="text" name="Display" align="right" class="display " >
           </td>
-          </tr>
 
+          </tr>
+      </form>
           <tr>
+
             <td  bgcolor="#E0E0E0">
+             <form name="Rechner" action="" onsubmit="calculateResult();return false;">
               <table border="0" cellpadding="0" cellspacing="2">
                 <tr>
                   <td><input type="button" class="button" value="  7   " onclick="add('7')"></td>
                   <td><input type="button" class="button" value="  8   " onclick="add('8')"></td>
                   <td><input type="button" class="button" value="  9   " onclick="add('9')"></td>
-                  <td rowspan="2" id='reset'><input type="reset"  class="button" value="  C  "></td>
+                  <td rowspan="2" id='reset'>
+                     <!-- reset() function does not get called ... -->
+                    <input type="button"  class="button" value="  C  " onclick="setValue('')">
+                  </td>
                   
                 </tr>
                 <tr>
@@ -296,14 +321,28 @@ function specials (func) {
                   <td><input type="button" class="button" value="  *   " onclick="add('*')"></td>
                   <td rowspan="2" id='submit'><input type="button" class="button" value="  =  "  onclick="calculateResult()"></td>
                 </tr>
+                <tr>
                   <td><input type="button" class="button" value=" ( " onclick="specials('(')"></td>
                   <td><input type="button"  class="button" value=" ) " onclick="specials(')')"></td>
                   <td><input type="button" class="button" value="  /   " onclick="add('/')"></td>
-                <tr>
                 </tr>
+
               </table>
-            </td></tr></table>
-          </form>
+              </form>
+              
+                <tr>
+                  <form name="Time">
+                  <td bgcolor="#E0E0E0">
+                    <label for="Visited"> Besucht seit </label>
+                    <input type="text" name="Visited" align="left" class="visit" disabled: disabled>
+                  </td>
+                  </form>
+                </tr>
+              
+        </tr>
+
+      </table>
+          
 
         </body> 
         </html>
