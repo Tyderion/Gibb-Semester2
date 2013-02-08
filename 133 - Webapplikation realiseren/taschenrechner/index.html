@@ -1,0 +1,259 @@
+<!DOCTYPE html> 
+<html lang="en"> 
+<head> 
+	<meta charset="utf-8" /> 
+  <title>Smashing HTML5!</title> <script type="text/javascript">
+  var COOKIE_NAME = 'calc-result'
+  var LOAD_TIME = new Date()
+
+/* Cookie Firefox (via Firefox Cookies view):
+  Name: calc-result
+  Content: 2.297396709994
+  Host:
+  Path: /C:/Users/Archie/Documents/Dropbox/Gibb/Semester%202/133%20-%20Webapplikation%20realiseren/taschenrechner/
+  Send For: Any type of connection
+  Expires: Samstag, 8. Februar 2014 11:00:27
+
+
+
+Cookie Internet Explorer
+Location: C:\Users\Archie\AppData\Local\Microsoft\Windows\Temporary Internet Files\Taschrenrechner/
+Inhalt: 
+
+  calc-result
+  9.303535670983768e+136
+  ~~local~~/C:/Users/Archie/Documents/Dropbox/Gibb/Semester%202/133%20-%20Webapplikation%20realiseren/taschenrechner/
+  1088
+  4265285760
+  30352565
+  2241706972
+  30279140
+  *
+
+
+*/
+
+//Cookie functions take from: http://www.w3schools.com/js/js_cookies.asp
+function setCookie(c_name,value,exdays)
+{
+  var exdate=new Date();
+  exdate.setDate(exdate.getDate() + exdays);
+  var c_value=escape(value) + ((exdays==null) ? "" : "; expires="+exdate.toUTCString());
+  document.cookie=c_name + "=" + c_value;
+}
+
+function getCookie(c_name)
+{
+  var i,x,y,ARRcookies=document.cookie.split(";");
+  for (i=0;i<ARRcookies.length;i++)
+  {
+    x=ARRcookies[i].substr(0,ARRcookies[i].indexOf("="));
+    y=ARRcookies[i].substr(ARRcookies[i].indexOf("=")+1);
+
+  //x=x.replace(/^\s+|\s+$/g,"");
+  x = x.trim()
+  if (x==c_name)
+  {
+    return unescape(y);
+  }
+}
+}
+
+function loadResult()
+{
+  var result=getCookie(COOKIE_NAME);
+  if (result!=null && result!="")
+  {
+    window.document.Rechner.Display.value = result
+  }
+
+  setInterval(function() {
+    window.document.Rechner.Date.value = new Date().toDisplay()
+    window.document.Rechner.Visited.value = ((new Date() - LOAD_TIME)/1000).toHHMMSS()
+  }, 200)
+}
+
+function pad(num) {
+  return ("0"+num).slice(-2)
+}
+
+Date.prototype.toDisplay = function () {
+    var day = pad(this.getDay())
+    var month = pad(this.getMonth())
+    var year = this.getYear()+1900 // Only years since 1900 are counted...
+    var hours   = pad(this.getHours())
+    var minutes = pad(this.getMinutes())
+    var seconds = pad(this.getSeconds())
+    var date    = day+"."+month+"."+year+", "+hours+':'+minutes+':'+seconds;
+    return date;
+}
+
+Number.prototype.toHHMMSS = function () {
+    var seconds = Math.floor(this),
+        hours = Math.floor(seconds / 3600);
+    seconds -= hours*3600;
+    var minutes = Math.floor(seconds / 60);
+    seconds -= minutes*60;
+
+    if (hours   < 10) {hours   = "0"+hours;}
+    if (minutes < 10) {minutes = "0"+minutes;}
+    if (seconds < 10) {seconds = "0"+seconds;}
+    return hours+':'+minutes+':'+seconds;
+}
+
+function saveResult()
+{
+  result=window.document.Rechner.Display.value
+  if (result!=null && result!="")
+  {
+    setCookie(COOKIE_NAME,result,365);
+  }
+}
+
+//End Cookie Function
+
+
+//Save and load the cookie onunload respectively onload
+window.onbeforeunload = saveResult
+window.onload = loadResult
+
+
+function validate(input) {
+	return /^[0-9-+*\/.]+$/.test(input)
+}
+
+function calculateResult() {
+  var x = 0
+  if (validate(window.document.Rechner.Display.value))
+    x = eval(window.document.Rechner.Display.value)
+  window.document.Rechner.Display.value = round(x)
+}
+
+function round(num) {
+	return Number((num).toFixed(12))
+}
+
+function add (char) {
+  window.document.Rechner.Display.value = window.document.Rechner.Display.value + char
+}
+
+function specials (func) {
+	var x = 0
+  x = eval(window.document.Rechner.Display.value)
+  var display = window.document.Rechner.Display
+  if (validate(window.document.Rechner.Display.value)) {
+    if (func == "sqrt") {
+      display.value = Math.sqrt(x)
+    }
+    if (func == "pow") {
+      display.value = x * x
+    }
+    if (func == "ln") {
+      display.value = Math.log(x)
+    }
+    if (func == "sin") {
+      display.value =round(Math.sin(Math.PI/180 * x))
+    }
+    if (func == "cos") {
+      display.value = round(Math.cos(Math.PI/180 * x))
+    }
+    if (func == "tan") {
+      display.value = round(Math.tan(Math.PI/180 * x))
+    }
+    if (func == "2^x") {
+      //Using a timeout to make it stay in the Display... Don't know why it does not work directly here.
+      setTimeout(function() {
+        display.value = round(Math.pow(2,x))
+      }, 0)
+    }
+  } else {
+    window.document.Rechner.Display.value = 0
+  }
+}
+</script>
+<style type="text/css">
+.button {  width:60px; text-align:center;
+ font-family:System,sans-serif;
+ font-size:100%; }
+ .display { width:240px; text-align:right;
+   font-family:System,sans-serif;
+   font-size:100%; }
+  .date { width:150px; text-align:right;
+   font-family:System,sans-serif;
+   font-size:100%;float: right;margin: 5px;}
+  .visit { width:70px; text-align:right;
+   font-family:System,sans-serif;
+   font-size:100%; float: left;
+   margin: 5px;} 
+   </style>
+   <link rel="stylesheet" href="css/main.css" type="text/css" /> 
+ <!--[if IE]> 
+ <script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]--> 
+<!--[if lte IE 7]> 
+	<script src="js/IE8.js" type="text/javascript"></script><![endif]--> 
+<!--[if lt IE 7]> 
+ <link rel="stylesheet" type="text/css" media="all" href="css/ie6.css"/><![endif]-->
+
+
+</head> 
+<body id="index" class="home"> 
+
+  <body bgcolor="#FFFFE0">
+
+    <form name="Rechner" action="" onsubmit="calculateResult();return false;">
+      <table border="5" cellpadding="10" cellspacing="0">
+                  <tr>
+          <td bgcolor="#C0C0C0">
+            <input type="text" name="Date" align="right" class="date">
+            <input type="text" name="Visited" align="left" class="visit"></td>
+          </tr>
+        <tr>
+          <td bgcolor="#C0C0C0">
+            <input type="text" name="Display" align="right" class="display"></td>
+          </tr>
+
+          <tr>
+            <td  bgcolor="#E0E0E0">
+              <table border="0" cellpadding="0" cellspacing="2">
+                <tr>
+                  <td><input type="button" width="60" class="button" value="  7   " onclick="add('7')"></td>
+                  <td><input type="button" width="60" class="button" value="  8   " onclick="add('8')"></td>
+                  <td><input type="button" width="60" class="button" value="  9   " onclick="add('9')"></td>
+                  <td><input type="button" width="60" class="button" value="  +   " onclick="add('+')"></td>
+                </tr>
+                <tr>
+                  <td><input type="button" width="60" class="button" value="  4   " onclick="add('4')"></td>
+                  <td><input type="button" width="60" class="button" value="  5   " onclick="add('5')"></td>
+                  <td><input type="button" width="60" class="button" value="  6   " onclick="add('6')"></td>
+                  <td><input type="button" width="60" class="button" value="  -   " onclick="add('-')"></td>
+                </tr>
+                <tr>
+                  <td><input type="button" width="60" class="button" value="  1   " onclick="add('1')"></td>
+                  <td><input type="button" width="60" class="button" value="  2   " onclick="add('2')"></td>
+                  <td><input type="button" width="60" class="button" value="  3   " onclick="add('3')"></td>
+                  <td><input type="button" width="60" class="button" value="  *   " onclick="add('*')"></td>
+                </tr>
+                <tr>
+                  <td><input type="button" width="60" class="button" value="  0   " onclick="add('0')"></td>
+                  <td><input type="button" width="60" class="button" value="  .   " onclick="add('.')"></td>
+                  <td><input type="button" width="60" class="button" value="  =   " onclick="calculateResult()"></td>
+                  <td><input type="button" width="60" class="button" value="  /   " onclick="add('/')"></td>
+                </tr>
+                <tr>
+                  <td><input type="button" width="60" class="button" value=" sin " onclick="specials('sin')"></td>
+                  <td><input type="button" width="60" class="button" value=" cos " onclick="specials('cos')"></td>
+                  <td><input type="button" width="60" class="button" value=" tan " onclick="specials('tan')"></td>
+                  <td><input type="reset"  width="60" class="button" value=" 2^x " onclick="specials('2^x')"></td>
+                </tr>
+                <tr>
+                  <td><input type="button" width="60" class="button" value="sqrt " onclick="specials('sqrt')"></td>
+                  <td><input type="button" width="60" class="button" value=" x² " onclick="specials('pow')"></td>
+                  <td><input type="button" width="60" class="button" value=" ln " onclick="specials('ln')"></td>
+                  <td><input type="reset"  width="60" class="button" value="  C  "></td>
+                </tr>
+              </table>
+            </td></tr></table>
+          </form>
+
+        </body> 
+        </html>

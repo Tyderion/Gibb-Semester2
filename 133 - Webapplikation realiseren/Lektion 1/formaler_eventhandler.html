@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta http-equiv="Content-Type" content="text/html;charset=utf-8">
+	<title>Tabelle</title>
+	<script type="text/javascript">
+	function chkFormular() {
+		if (document.MyForm.input1.value == "") {
+			alert("Bitte fülle den Namen aus")
+		}
+		if (document.MyForm.input2.value == "") {
+			alert("Bitte fülle die E-Mail aus")
+		} 
+		if (document.MyForm.input1.value != "" && document.MyForm.input2.value != "")  {
+			alert("Danke für das vollständige ausfüllen")
+		}
+	}
+	
+	</script>
+
+	<style> 
+	
+
+
+	</style>
+</head>
+<body>
+	<div>a </div>
+	<div>c</div>
+	<div>b</div>
+<form id="MyForm" name="MyForm" >
+	<label for="input1">Name</label>
+	<input id="input1" name="input1" size="15" type="text" />
+	<label for="input2">Email</label>
+	<input id="input2" name="input2" size="15" type="text" />
+<button type="submit" onclick="chkFormular()"">Testen	</button>
+</form>
+</body
+></html>
+

@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta http-equiv="Content-Type" content="text/html;charset=utf-8">
+	<title>Tabelle</title>
+	<script type="text/javascript">
+	// Works in new Browsers
+	document.addEventListener('DOMContentLoaded',function(){ 
+
+		var adresse = new Array()
+
+
+		adresse[0] =  {
+			name: "Hans Müller",
+			anschrift: "Musterstrasse 1",
+			plz: 8000,
+			ort: "Zürich",
+			email: "hmueller@muster.ch",
+			telefon: "079 999 99 99"
+		}
+
+		adresse[1] = {
+			name: "Peter Meier",
+			anschrift: "Musterstrasse 2",
+			plz: 8000,
+			ort: "Zürich",
+			email: "pmeier@muster.ch",
+			telefon:  "078 123 45 67"
+		}
+
+		adresse[2] = {
+			name: "Thomas Bauer",
+			anschrift: "Bauerstrasse 1",
+			plz: 9000,
+			ort: "St. Gallen",
+			email: "tbauer@bauer.ch",
+			telefon:  "078 445 56 65"
+		}
+
+
+		document.writeln("<table>")
+		//Table Head
+		document.writeln("<thead>")
+		for (var elem in adresse[0]) {
+			document.writeln("<th>"+elem.charAt(0).toUpperCase() + elem.slice(1)+"</th>")
+		}
+		document.writeln("</thead>")
+
+		//Table Body
+		document.writeln("<tbody>")
+		for(var adress in adresse) {
+			document.writeln("<tr>")
+			for (var elem in adresse[adress]) {
+	  		document.writeln("<td>"+adresse[adress][elem]+"</td>")
+	  	}
+	  	document.writeln("</tr>")
+		}
+		document.writeln("</tbody>")
+
+	})
+
+	</script>
+
+	<style> 
+	table {
+		border: 1px solid gray;
+		float: left;
+	}
+	table > tbody > tr {
+		border: 1px solid gray;
+	}
+
+
+	</style>
+</head>
+<body>
+
+</body
+></html>
+

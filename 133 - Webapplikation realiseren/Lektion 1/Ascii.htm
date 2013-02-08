@@ -1,0 +1,133 @@
+<HTML>
+<HEAD><TITLE>Einfache G&uuml;ltigkeitspr&uuml;fung</TITLE>
+<script type="text/javascript">
+<!--
+function ZeichenAusgeben(intCode)
+ {
+ var NeueZeile;
+ NeueZeile = "";
+ if(((intCode - 31) % 11) == 0)
+  {
+  NeueZeile = String.fromCharCode(13) + String.fromCharCode(10);
+  }
+ if(intCode <= 32)
+  {
+  document.ASCIIFormular.txtAnzeige.value = "Die folgende Tabelle wurde mit '" + document.ASCIIFormular.lstTechnik.options [document.ASCIIFormular.lstTechnik.selectedIndex].text + "'-Schleife erstellt" + String.fromCharCode(13) + String.fromCharCode(10) + String.fromCharCode(13) + String.fromCharCode(10);
+  }
+ if(intCode < 100)
+  {
+  document.ASCIIFormular.txtAnzeige.value = document.ASCIIFormular.txtAnzeige.value + "0" + intCode + " " + String.fromCharCode(intCode) + "  " + NeueZeile;
+  }
+  else
+  {
+  document.ASCIIFormular.txtAnzeige.value = document.ASCIIFormular.txtAnzeige.value + intCode + " " + String.fromCharCode(intCode) + "  " + NeueZeile;
+  }
+ }
+
+function ASCIICodeErzeugenJava()
+ {
+ var intI;
+ if (document.ASCIIFormular.lstTechnik.selectedIndex == -1)
+  {
+  alert("Bitte Technik wählen");
+  }
+  else
+  {
+   switch(document.ASCIIFormular.lstTechnik.options  [document.ASCIIFormular.lstTechnik.selectedIndex].text)
+    {
+    case "For ... Next":
+     for (intI=32; intI<=255 ; intI++ )
+     {
+     ZeichenAusgeben (intI);
+     }
+     break;
+    case "While ... Wend":
+     intI=32;
+     while(intI <= 255)
+      {
+      ZeichenAusgeben (intI);
+      intI=intI+1;
+      }
+     break;
+    case "Do ... Loop Until":
+     intI=32;
+     do
+      {
+      ZeichenAusgeben (intI);
+      intI=intI+1;
+      } while(intI <= 255);
+     break;
+    }
+   }
+  }
+
+//-->
+</script>
+
+<script type="text/vbscript">
+<!--
+Sub ZeichenAusgeben(intCode)
+Dim NeueZeile
+NeueZeile = ""
+If ((intCode - 31) Mod 11) = 0 Then
+    NeueZeile = Chr(13) & Chr(10)
+End If
+If intCode <= 32 Then
+    Document.ASCIIFormular.txtAnzeige.value = "Die folgende Tabelle wurde mit '" & Document.ASCIIFormular.lstTechnik.options (Document.ASCIIFormular.lstTechnik.selectedIndex).text & "'-Schleife erstellt" & Chr(13) & Chr(10) & Chr(13) & Chr(10)
+End If
+If intCode < 100 Then
+  Document.ASCIIFormular.txtAnzeige.value = Document.ASCIIFormular.txtAnzeige.value & "0" & intCode & " " & Chr(intCode) & "  " & NeueZeile
+Else
+  Document.ASCIIFormular.txtAnzeige.value = Document.ASCIIFormular.txtAnzeige.value & intCode & " " & Chr(intCode) & "  " & NeueZeile
+End If
+End Sub
+
+Sub ASCIICodeErzeugen_OnClick
+Dim intI
+If Document.ASCIIFormular.lstTechnik.selectedIndex = -1 Then
+  MsgBox "Bitte Technik wählen"
+Else
+  Select Case Document.ASCIIFormular.lstTechnik.options (Document.ASCIIFormular.lstTechnik.selectedIndex).text
+    Case "For ... Next"
+      For intI = 32 To 255
+        ZeichenAusgeben (intI)
+      Next
+    Case "While ... Wend"
+      intI = 32
+      While intI <= 255
+        ZeichenAusgeben (intI)
+        intI = intI + 1
+      Wend
+    Case "Do ... Loop Until"
+      intI = 32
+      Do
+        ZeichenAusgeben (intI)
+        intI = intI + 1
+      Loop Until intI > 255
+    End Select
+  End If
+End Sub
+-->
+</SCRIPT>
+</HEAD>
+<BODY>
+<H3>ASCII- und ANSI-Zeichencodes</H3><HR>
+<FORM Name="ASCIIFormular">
+<fieldset>
+<legend><b>Technik</b></legend>
+<select name="lstTechnik" size="3">
+<option> For ... Next
+<option> While ... Wend
+<option> Do ... Loop Until
+</select>
+<input type=button value=" OK (VBScript) " Name="ASCIICodeErzeugen">
+<input type=button value=" OK (JavaScript) " onClick="ASCIICodeErzeugenJava()">
+</fieldset>
+<br>
+<fieldset>
+<legend><b>Anzeige</b></legend>
+<textarea name="txtAnzeige" cols="77" rows="24"></textarea>
+</fieldset>
+</FORM>
+</BODY>
+</HTML>
