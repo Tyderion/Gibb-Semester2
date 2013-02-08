@@ -47,16 +47,14 @@ function getCookie(c_name)
   var i,x,y,ARRcookies=document.cookie.split(";");
   for (i=0;i<ARRcookies.length;i++)
   {
-    x=ARRcookies[i].substr(0,ARRcookies[i].indexOf("="));
-    y=ARRcookies[i].substr(ARRcookies[i].indexOf("=")+1);
-
-  //x=x.replace(/^\s+|\s+$/g,"");
-  x = x.trim()
-  if (x==c_name)
-  {
-    return unescape(y);
+    var cookie = ARRcookies[i].split("=")
+    x = cookie[0], y = cookie[1]
+    x = x.trim()
+    if (x==c_name)
+    {
+      return unescape(y);
+    }
   }
-}
 }
 
 function loadResult()
@@ -121,7 +119,7 @@ function add (char) {
 }
 
 function useKeypresses(e) {
-    if (e.charCode > 40 )
+    if (e.charCode >= 40 ) //40 = (
     {
       add(String.fromCharCode(e.charCode))
     }
@@ -192,6 +190,8 @@ function specials (func) {
     font-size:100%;  
     margin-left: 5px;
     margin-top: 5px;
+    color: black;
+    bgcolor: #C0C0C0;
   }
   .date { 
     width:243px;  
@@ -202,6 +202,8 @@ function specials (func) {
     padding-right: 2px;  
     margin-top: 5px;  
     margin-right: 4px;
+    color: black;
+    background: white;
   }
   .visit { 
     width:70px;  
@@ -213,7 +215,15 @@ function specials (func) {
     margin-left: 1px;  
     padding-right: 5px;
     margin-right: 5px;
+    color: black;
+    background: white;
   } 
+  #submit, #reset {
+    height: 200%;
+  }
+  #submit > input, #reset > input {
+    height: 50px;
+  }
   input {
     border: 1px gray solid;   
   }
@@ -235,13 +245,13 @@ function specials (func) {
       <table border="5" cellpadding="10" cellspacing="0">
                   <tr>
           <td bgcolor="#C0C0C0">
-            <input type="text" name="Date" align="right" class="date">
+            <input type="text" name="Date" align="right" class="date" disabled: disabled>
             </td>
           </tr>
         <tr>
           <td bgcolor="#C0C0C0">
-            <input type="text" name="Visited" align="left" class="visit">
-            <input type="text" name="Display" align="right" class="display ">
+            <input type="text" name="Visited" align="left" class="visit" disabled: disabled>
+            <input type="text" name="Display" align="right" class="display " >
           </td>
           </tr>
 
@@ -252,37 +262,44 @@ function specials (func) {
                   <td><input type="button" class="button" value="  7   " onclick="add('7')"></td>
                   <td><input type="button" class="button" value="  8   " onclick="add('8')"></td>
                   <td><input type="button" class="button" value="  9   " onclick="add('9')"></td>
-                  <td><input type="button" class="button" value="  +   " onclick="add('+')"></td>
+                  <td rowspan="2" id='reset'><input type="reset"  class="button" value="  C  "></td>
+                  
                 </tr>
                 <tr>
                   <td><input type="button" class="button" value="  4   " onclick="add('4')"></td>
                   <td><input type="button" class="button" value="  5   " onclick="add('5')"></td>
                   <td><input type="button" class="button" value="  6   " onclick="add('6')"></td>
-                  <td><input type="button" class="button" value="  -   " onclick="add('-')"></td>
+                  
                 </tr>
                 <tr>
                   <td><input type="button" class="button" value="  1   " onclick="add('1')"></td>
                   <td><input type="button" class="button" value="  2   " onclick="add('2')"></td>
                   <td><input type="button" class="button" value="  3   " onclick="add('3')"></td>
-                  <td><input type="button" class="button" value="  *   " onclick="add('*')"></td>
+                  <td><input type="button" class="button" value=" sin " onclick="specials('sin')"></td>
+                  
                 </tr>
                 <tr>
                   <td><input type="button" class="button" value="  0   " onclick="add('0')"></td>
                   <td><input type="button" class="button" value="  .   " onclick="add('.')"></td>
-                  <td><input type="button" class="button" value="  =   " onclick="calculateResult()"></td>
-                  <td><input type="button" class="button" value="  /   " onclick="add('/')"></td>
-                </tr>
-                <tr>
-                  <td><input type="button" class="button" value=" sin " onclick="specials('sin')"></td>
+                  <td><input type="button" class="button" value="  +   " onclick="add('+')"></td>
                   <td><input type="button" class="button" value=" cos " onclick="specials('cos')"></td>
-                  <td><input type="button" class="button" value=" tan " onclick="specials('tan')"></td>
-                  <td><input type="button"  class="button" value=" 2^x " onclick="specials('2^x')"></td>
                 </tr>
                 <tr>
                   <td><input type="button" class="button" value="sqrt " onclick="specials('sqrt')"></td>
+                  <td><input type="button"  class="button" value=" 2^x " onclick="specials('2^x')"></td>
+                  <td><input type="button" class="button" value="  -   " onclick="add('-')"></td>
+                  <td><input type="button" class="button" value=" tan " onclick="specials('tan')"></td>
+                </tr>
+                <tr>
                   <td><input type="button" class="button" value=" x² " onclick="specials('pow')"></td>
                   <td><input type="button" class="button" value=" ln " onclick="specials('ln')"></td>
-                  <td><input type="reset"  class="button" value="  C  "></td>
+                  <td><input type="button" class="button" value="  *   " onclick="add('*')"></td>
+                  <td rowspan="2" id='submit'><input type="button" class="button" value="  =  "  onclick="calculateResult()"></td>
+                </tr>
+                  <td><input type="button" class="button" value=" ( " onclick="specials('(')"></td>
+                  <td><input type="button"  class="button" value=" ) " onclick="specials(')')"></td>
+                  <td><input type="button" class="button" value="  /   " onclick="add('/')"></td>
+                <tr>
                 </tr>
               </table>
             </td></tr></table>
