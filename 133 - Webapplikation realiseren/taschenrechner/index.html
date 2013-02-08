@@ -125,8 +125,7 @@ function useKeypresses(e) {
     {
       add(String.fromCharCode(e.charCode))
     }
-    if (e.charCode == 0)
-      switch(e.keyCode) {
+    switch(e.keyCode) {
         case 8:
           window.document.Rechner.Display.value = window.document.Rechner.Display.value.slice(0,-1)
           break
@@ -222,7 +221,6 @@ function specials (func) {
     border: 1px gray solid;   
   }
   </style>
-   <link rel="stylesheet" href="css/main.css" type="text/css" /> 
  <!--[if IE]> 
  <script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]--> 
 <!--[if lte IE 7]> 
