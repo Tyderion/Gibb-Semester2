@@ -1,7 +1,7 @@
-<!DOCTYPE html> 
-<html lang="en"> 
-<head> 
-	<meta charset="utf-8" /> 
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="utf-8" />
   <title>Browser-Rechner</title> <script type="text/javascript">
   var COOKIE_NAME = 'calc-result'
   var LOAD_TIME = new Date()
@@ -18,7 +18,7 @@
 
 Cookie Internet Explorer
 Location: C:\Users\Archie\AppData\Local\Microsoft\Windows\Temporary Internet Files\Taschrenrechner/
-Inhalt: 
+Inhalt:
 
   calc-result
   9.303535670983768e+136
@@ -83,6 +83,7 @@ function saveResult()
 //Save and load the cookie onunload respectively onload
 window.onbeforeunload = saveResult
 window.onload = loadResult
+window.onkeypress=handleKeyPressEvent
 
 function setValue(value) {
   window.document.Rechner.Display.value = value
@@ -90,10 +91,6 @@ function setValue(value) {
 
 function getValue() {
   return window.document.Rechner.Display.value
-}
-
-function reset() {
-  setValue('')
 }
 
 function setError(error) {
@@ -107,7 +104,7 @@ function validate(input) {
 function calculateResult() {
   var x = 0
   if (validate(getValue())) {
-    try { 
+    try {
     //If there is a syntax error (e.g. 2**4 or 2++2 ...)
       x = eval(getValue())
       setValue(round(x))
@@ -118,7 +115,7 @@ function calculateResult() {
   } else {
     setValue('')
   }
-  
+
 }
 
 function round(num) {
@@ -129,7 +126,8 @@ function add (char) {
   setValue(getValue() + char)
 }
 
-function useKeypresses(e) {
+function handleKeyPressEvent(e) {
+
   if (e.charCode >= 40 ) //40 = '('
   {
     add(String.fromCharCode(e.charCode))
@@ -157,7 +155,7 @@ function degreeToRadian(num) {
 function specials (func) {
 	var x = 0
   try { //If there is a syntax error (e.g. 2**4 or 2++2 ...)
-    
+
     if (validate(x)) {
       x = eval(getValue())
       if (func == "sqrt") {
@@ -196,46 +194,46 @@ function specials (func) {
     margin-left: auto;
     margin-right: auto;
   }
-  .button {  
+  .button {
     width:60px;
     text-align:center;
     font-family:System,sans-serif;
     font-size:100%;
   }
-  .display { 
+  .display {
     width: 243px;
-    text-align:right; 
-    font-family:System,sans-serif;  
-    font-size:100%;  
+    text-align:right;
+    font-family:System,sans-serif;
+    font-size:100%;
     margin-left: 2px;
     margin-top: 5px;
     color: black;
   }
-  .date { 
-    width:243px;  
-    text-align:right;  
-    font-family:System,sans-serif;  
-    font-size:100%;  
-    float: right;  
-    padding-right: 2px;  
-    margin-top: 5px;  
+  .date {
+    width:243px;
+    text-align:right;
+    font-family:System,sans-serif;
+    font-size:100%;
+    float: right;
+    padding-right: 2px;
+    margin-top: 5px;
     margin-right: 2px;
     color: black;
     background: white;
   }
-  .visit { 
-    width:70px;  
-    text-align:right;  
-    font-family:System,sans-serif;  
-    font-size:100%;   
-    float: right;   
-    margin-top: 5px;  
-    margin-left: 1px;  
+  .visit {
+    width:70px;
+    text-align:right;
+    font-family:System,sans-serif;
+    font-size:100%;
+    float: right;
+    margin-top: 5px;
+    margin-left: 1px;
     padding-right: 5px;
     margin-right: 5px;
     color: black;
     background: white;
-  } 
+  }
   #submit, #reset {
     height: 200%;
   }
@@ -243,7 +241,7 @@ function specials (func) {
     height: 50px;
   }
   input {
-    border: 1px gray solid;   
+    border: 1px gray solid;
   }
   label {
     float: left;
@@ -252,21 +250,21 @@ function specials (func) {
   </style>
 
 
- <!--[if IE]> 
- <script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]--> 
-<!--[if lte IE 7]> 
-	<script src="js/IE8.js" type="text/javascript"></script><![endif]--> 
-<!--[if lt IE 7]> 
+ <!--[if IE]>
+ <script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+<!--[if lte IE 7]>
+	<script src="js/IE8.js" type="text/javascript"></script><![endif]-->
+<!--[if lt IE 7]>
  <link rel="stylesheet" type="text/css" media="all" href="css/ie6.css"/><![endif]-->
 
 
-</head> 
-<body id="index" class="home" onkeypress="useKeypresses(event)" > 
+</head>
+<body id="index" class="home"  >
 
   <body bgcolor="#FFFFE0">
     <form name="Rechner" action="" onsubmit="calculateResult();return false;">
       <table border="5" cellpadding="10" cellspacing="0">
-        
+
                   <tr>
           <td bgcolor="#C0C0C0">
             <input type="text" name="Date" align="right" class="date" disabled: disabled>
@@ -274,7 +272,7 @@ function specials (func) {
           </tr>
         <tr>
           <td bgcolor="#C0C0C0">
-            
+
             <input type="text" name="Display" align="right" class="display " >
           </td>
 
@@ -283,30 +281,30 @@ function specials (func) {
           <tr>
 
             <td  bgcolor="#E0E0E0">
-             
+
               <table border="0" cellpadding="0" cellspacing="2">
                 <tr>
                   <td><input type="button" class="button" value="  7   " onclick="add('7')"></td>
                   <td><input type="button" class="button" value="  8   " onclick="add('8')"></td>
                   <td><input type="button" class="button" value="  9   " onclick="add('9')"></td>
                   <td rowspan="2" id='reset'>
-                     <!-- reset() function does not get called ... -->
+                     <!-- reset() function does not get called ... so i use the content of the function-->
                     <input type="button"  class="button" value="  C  " onclick="setValue('')">
                   </td>
-                  
+
                 </tr>
                 <tr>
                   <td><input type="button" class="button" value="  4   " onclick="add('4')"></td>
                   <td><input type="button" class="button" value="  5   " onclick="add('5')"></td>
                   <td><input type="button" class="button" value="  6   " onclick="add('6')"></td>
-                  
+
                 </tr>
                 <tr>
                   <td><input type="button" class="button" value="  1   " onclick="add('1')"></td>
                   <td><input type="button" class="button" value="  2   " onclick="add('2')"></td>
                   <td><input type="button" class="button" value="  3   " onclick="add('3')"></td>
                   <td><input type="button" class="button" value=" sin " onclick="specials('sin')"></td>
-                  
+
                 </tr>
                 <tr>
                   <td><input type="button" class="button" value="  0   " onclick="add('0')"></td>
@@ -334,20 +332,20 @@ function specials (func) {
 
               </table>
 
-              
+
                 <tr>
-     
+
                   <td bgcolor="#E0E0E0">
                     <label for="Visited"> Besucht seit </label>
                     <input type="text" name="Visited" align="left" class="visit" disabled: disabled>
                   </td>
-                  
+
                 </tr>
-              
+
         </tr>
 
       </table>
-          
+
 </form>
-        </body> 
+        </body>
         </html>
