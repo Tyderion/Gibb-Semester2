@@ -9,6 +9,9 @@ public class Aufgabe1 {
 	 * @param args
 	 */
 	public static void main(String[] args) {
+		System.out.println(new String("hello") == new String("hello"));
+		System.out.println(new String("hello") == "hello");
+		System.out.println(new String("hello").equals(new String("hello")));
 		Outputter.aufgabe("a", 0);
 		aufgabe_a();
 		Outputter.aufgabe("b", 0);

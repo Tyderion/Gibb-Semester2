@@ -33,7 +33,7 @@ public class Aufgabe1 {
 	
 	private static int aufgabe_b_alternativ(double number) {
 		int exponent = 0;
-		int power_of_two = 1; //Komentar
+		int power_of_two = 1;
 		for (; power_of_two <= number;exponent++,power_of_two <<= 1);
 		return exponent;
 	}

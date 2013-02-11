@@ -1,3 +1,4 @@
+"use strict"
 var COOKIE_NAME = 'calc-result'
 var LOAD_TIME = new Date()
 /* Cookie Firefox (via Firefox Cookies view):
@@ -26,7 +27,7 @@ function setCookie(cookie_name,value,daysUntilExpire)
 {
   var expireDate=new Date();
   expireDate.setDate(expireDate.getDate() + daysUntilExpire);
-  var c_value=encodeURIComponent(value) + ((daysUntilExpire==null) ? "" : "; expires="+expireDate.toUTCString());
+  var c_value=encodeURIComponent(value) + ((daysUntilExpire===null) ? "" : "; expires="+expireDate.toUTCString());
   document.cookie=cookie_name + "=" + c_value;
 }
 
@@ -35,7 +36,7 @@ function getCookie(cookie_name)
   var i, key_value, cookies = document.cookie.split(";");
   for (i = 0; i < cookies.length; i++) {
     key_value = cookies[i].split("=");
-    if (key_value[0].trim() == cookie_name) return decodeURIComponent(key_value[1])
+    if (key_value[0].trim() === cookie_name) return decodeURIComponent(key_value[1])
   }
 }
 
@@ -63,11 +64,20 @@ function saveResult()
   }
 }
 
-//End Cookie Function
+//End Cookie Functions
 //Save and load the cookie onunload respectively onload
 window.onbeforeunload = saveResult
 window.onload = loadResult
+
+//Firefox: 100% Trigger this event
+//Chromium: No backspace/delete (and other special keys I guess)
+//IE: Like Chrome or sometimes "No Keypress event ..." (The reason is unkown to me)
 window.onkeypress=handleKeyPressEvent
+
+//Firefox: 100% Trigger this event
+//Chromium/IE: Backspace/delete (etc) also trigger this event
+//Backspace always goes back one page except if there is no history.
+window.onkeyup=handleKeyUp
 
 function setValue(value) {
   window.document.Rechner.Display.value = value
@@ -114,13 +124,16 @@ function handleKeyPressEvent(e) {
   {
     add(String.fromCharCode(e.charCode))
   }
-  switch(e.keyCode) {
+  }
+  function handleKeyUp(e) {
+    //For Firefox, this could be in handleKeyPressEvent
+    switch(e.keyCode) {
       case 8: //'backspace'
       setValue(getValue().slice(0,-1))
       break
-      case 110: //dot
-      add('.')
-      break
+      //case 110: //dot
+     // add('.')
+      //break
       case 13: // enter
       calculateResult()
       break
@@ -139,25 +152,25 @@ function handleKeyPressEvent(e) {
   try { //If there is a syntax error (e.g. 2**4 or 2++2 ...)
     if (validate(x)) {
       x = eval(getValue())
-      if (func == "sqrt") {
+      if (func === "sqrt") {
         setValue(round(Math.sqrt(x)))
       }
-      if (func == "pow") {
+      if (func === "pow") {
         setValue(round(x * x))
       }
-      if (func == "ln") {
+      if (func === "ln") {
         setValue(round(Math.log(x)))
       }
-      if (func == "sin") {
+      if (func === "sin") {
         setValue(round(Math.sin(degreeToRadian(x))))
       }
-      if (func == "cos") {
+      if (func === "cos") {
         setValue(round(Math.cos(degreeToRadian(x))))
       }
-      if (func == "tan") {
+      if (func === "tan") {
         setValue(round(Math.tan(degreeToRadian(x))))
       }
-      if (func == "2^x") {
+      if (func === "2^x") {
         setValue(round(Math.pow(2,x)))
       }
     } else {
