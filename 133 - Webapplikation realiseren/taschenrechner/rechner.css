@@ -9,7 +9,7 @@ table {
   font-size:100%;
 }
 .display {
-  width: 243px;
+  width: 265px;
   text-align:right;
   font-family:System,sans-serif;
   font-size:100%;
@@ -18,7 +18,7 @@ table {
   color: black;
 }
 .date {
-  width:243px;
+  width:265px;
   text-align:right;
   font-family:System,sans-serif;
   font-size:100%;

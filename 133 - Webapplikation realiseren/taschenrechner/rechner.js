@@ -3,25 +3,28 @@ var COOKIE_NAME = 'calc-result'
 var LOAD_TIME = new Date()
 /* Cookie Firefox (via Firefox Cookies view):
   Name: calc-result
-  Content: 2.297396709994
+  Content: 0.037391194276
   Host:
   Path: /C:/Users/Archie/Documents/Dropbox/Gibb/Semester%202/133%20-%20Webapplikation%20realiseren/taschenrechner/
   Send For: Any type of connection
-  Expires: Samstag, 8. Februar 2014 11:00:27
+  Expires: Samstag, 8. Februar 2014 16:13:14
+
 Cookie Internet Explorer
-Location: C:\Users\Archie\AppData\Local\Microsoft\Windows\Temporary Internet Files\Taschrenrechner/
+Location according to Windows Explorer: C:\Users\Archie\AppData\Local\Microsoft\Windows\Temporary Internet Files\Taschrenrechner/
+Location according to TextEditor: C:\Users\Archie\AppData\Roaming\Microsoft\Windows\Cookies\U1WZH03N.txt
 Inhalt:
-  calc-result
-  9.303535670983768e+136
+calc-result
+  0.037391194276
   ~~local~~/C:/Users/Archie/Documents/Dropbox/Gibb/Semester%202/133%20-%20Webapplikation%20realiseren/taschenrechner/
   1088
-  4265285760
-  30352565
-  2241706972
-  30279140
+  1265827584
+  30353346
+  3543310627
+  30279920
   *
+
   */
-//Cookie functions take from: http://www.w3schools.com/js/js_cookies.asp
+//Cookie functions taken from (and then modified): http://www.w3schools.com/js/js_cookies.asp
 
 function setCookie(cookie_name,value,daysUntilExpire)
 {
@@ -66,7 +69,7 @@ function saveResult()
 
 //End Cookie Functions
 //Save and load the cookie onunload respectively onload
-window.onbeforeunload = saveResult
+window.onbeforeunload  = saveResult
 window.onload = loadResult
 
 //Firefox: 100% Trigger this event
@@ -120,26 +123,31 @@ function add (chr) {
 }
 
 function handleKeyPressEvent(e) {
-  if (e.charCode >= 40 ) //40 = '('
+
+  if (e.target.name !== "Display")
   {
-    add(String.fromCharCode(e.charCode))
+    if (e.charCode >= 40 ) //40 = '('
+    {
+      add(String.fromCharCode(e.charCode))
+    }
   }
-  }
-  function handleKeyUp(e) {
-    //For Firefox, this could be in handleKeyPressEvent
-    switch(e.keyCode) {
-      case 8: //'backspace'
-      setValue(getValue().slice(0,-1))
-      break
-      //case 110: //dot
-     // add('.')
-      //break
-      case 13: // enter
-      calculateResult()
-      break
-      case 46: // delete
-      setValue(getValue().slice(1))
-      break
+}
+function handleKeyUp(e) {
+  //console.log(e.target)
+  if (e.target.name !== "Display")
+  {
+      //For Firefox, this could be in handleKeyPressEvent
+      switch(e.keyCode) {
+        case 8: //'backspace'
+        setValue(getValue().slice(0,-1))
+        break
+        case 13: // enter
+        calculateResult()
+        break
+        case 46: // delete
+        setValue(getValue().slice(1))
+        break
+      }
     }
   }
 
@@ -149,7 +157,7 @@ function handleKeyPressEvent(e) {
 
   function specials (func) {
    var x = 0
-  try { //If there is a syntax error (e.g. 2**4 or 2++2 ...)
+  try { //If there is an error (e.g. 2**4 or 2++2 ...)
     if (validate(x)) {
       x = eval(getValue())
       if (func === "sqrt") {
@@ -177,7 +185,7 @@ function handleKeyPressEvent(e) {
       setValue(0)
     }
   } catch (e) {
-    // Tell the user it is a syntax error
+    // Tell the user it is an error
     setError(e)
   }
 }
