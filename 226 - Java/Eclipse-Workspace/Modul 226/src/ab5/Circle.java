@@ -26,9 +26,9 @@ public class Circle extends Figure {
 		return end2;
 	}
 	
-	public Figure move(double dx, double dy) {
-		center().move(dx, dy);
-		edge().move(dx, 0);
-		return this;
-	}
+//	public Figure move(double dx, double dy) {
+//		center().move(dx, dy);
+//		edge().move(dx, 0);
+//		return this;
+//	}
 }
