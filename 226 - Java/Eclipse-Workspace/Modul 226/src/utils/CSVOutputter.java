@@ -33,6 +33,7 @@ public class CSVOutputter {
 		list_of_values.add(result.toString().substring(0,result.length()-1));
 	}
 	
+	
 	public boolean save() {
 		try 
 		 {

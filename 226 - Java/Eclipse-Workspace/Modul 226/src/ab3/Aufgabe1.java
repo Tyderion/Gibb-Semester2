@@ -9,26 +9,38 @@ public class Aufgabe1 {
 	 * @param args
 	 */
 	public static void main(String[] args) {
+		System.out.println("new String(\"hello\") == new String(\"hello\")");
 		System.out.println(new String("hello") == new String("hello"));
+		System.out.println("new String(\"hello\") == \"hello\"");
 		System.out.println(new String("hello") == "hello");
+		System.out.println("new String(\"hello\").equals(new String(\"hello\"))");
 		System.out.println(new String("hello").equals(new String("hello")));
 		Outputter.aufgabe("a", 0);
 		aufgabe_a();
 		Outputter.aufgabe("b", 0);
 		aufgabe_b();
 		
+		
+		System.out.println("\nReading saved Things from File and outputting it: ");
 		CSVOutputter t  = new CSVOutputter("testfile.csv");
 		Double[][] s = t.load();
-		for (String title : t.titles()) {
-			System.out.print(title+"\t");
+
+		for (int i = 0; i< t.titles().length; i++) {
+			System.out.print(t.titles()[i]+"\t");
+			if (i == 1) System.out.print("\t");
 		}
 		System.out.print("\n");
+		
 		for (Double[] line : s) {
-			for (int i = 0; i < line.length; i++) {
-				if (i > 0) {
+			for (int i = 1; i < line.length; i++) {
+				if (i > 1) {
+					System.out.print("\t");
+					System.out.print(String.format("%.8f",line[i]));
+				} else {
+					System.out.print(line[0].intValue()+"^"+line[1].intValue());
 					System.out.print("\t");
 				}
-				System.out.print(line[i]);
+				
 			}
 			System.out.print("\n");
 		}
@@ -45,7 +57,7 @@ public class Aufgabe1 {
 		CSVOutputter output = new CSVOutputter("testfile.csv");
 		output.setTitle("Schritte","Pi","Abweichung");
 		for (int i = 0; i<max_steps_exponent; i++) {
-			output.addValue(Math.pow(10,i),String.format("%.8f",results[i][0]), String.format("%.8f",results[i][1]));
+			output.addValue((Integer)10,(Integer)i+1,String.format("%.8f",results[i][0]), String.format("%.8f",results[i][1]));
 		}
 		output.save();
 		System.out.println("Schritte\tPi\t\tAbweichung");
