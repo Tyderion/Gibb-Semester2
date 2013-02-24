@@ -26,6 +26,9 @@ public class Circle extends Figure {
 		return end2;
 	}
 	
+	public double radius() {
+		return Math.abs(end1.x - end2.x);
+	}
 //	public Figure move(double dx, double dy) {
 //		center().move(dx, dy);
 //		edge().move(dx, 0);

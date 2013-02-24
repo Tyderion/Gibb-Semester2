@@ -31,5 +31,9 @@ public class Account {
 	public double getSaldo() {
 		return balance;
 	}
+	
+	public Customer getOwner() {
+		return owner;
+	} 
 
 }
