@@ -1,5 +1,7 @@
 /226 - Java/Unterlagen
-
+*.class
+*.docx
+*.pptx
 *.xlsx
 *.csv
 *.doc
