@@ -1,4 +1,4 @@
-package ab5;
+package editor.figures;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
@@ -7,6 +7,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+
 
 public class FigureHandler {
 	
@@ -24,7 +25,11 @@ public class FigureHandler {
 		path = filepath;
 	}
 	
-	public Figure figure(int index) {
+	public List<Figure> figures() {
+		return this.figures;
+	}
+	
+	public Figure getFigure(int index) {
 		return figures.get(index);
 	}
 	public void add(Figure f) {
@@ -65,9 +70,11 @@ public class FigureHandler {
 				}
 				else if (str.startsWith("Line") ) {
 					figures.add(new Line(str));
-				} else {
-					figures.add(new Figure(str));
-				}
+				}	else if (str.startsWith("Label") ) {
+					figures.add(new Label(str));
+				} //else {
+//					figures.add(new Figure(str));
+//				}
 			}
 //			objs_list.add(in.readLine().split(","));
 			in.close();

@@ -1,6 +1,9 @@
-package ab5;
+package editor.figures;
 
-public class Figure {
+import java.awt.Graphics;
+
+
+public abstract class Figure {
 
 	protected Point end1, end2;
 
@@ -21,12 +24,14 @@ public class Figure {
 	
 	
 	
-	public Figure move(double dx, double dy) {
+	public Figure move(int dx, int dy) {
 		end1.move(dx, dy);
 		end2.move(dx, dy);
 		return this;
 	}
 	
+	
+	public abstract void draw(Graphics g);
 	
 	
 

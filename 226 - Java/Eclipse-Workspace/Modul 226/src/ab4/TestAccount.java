@@ -16,16 +16,16 @@ public class TestAccount {
 		a.deposit(20.5);
 		System.out.println("Korrekt falls "+a.getSaldo() + " == 20.5");
 		a.deposit(20.5);
-		System.out.println("Korrekt falls "+a.getSaldo() + " == 41");
+		System.out.println("Korrekt falls "+a.getSaldo() + " == 41.0");
 		
 		b = new Account(cb);
 		b.deposit(100);
-		b.yieldInterest(365);
+		b.yieldInterest(360);
 		System.out.println("Korrekt falls "+b.getSaldo() + " == 105");
 		
-		c = new Account(7.2, cc);
+		c = new Account(0.072, cc);
 		c.deposit(100);
-		c.yieldInterest(365);
+		c.yieldInterest(360);
 		System.out.println("Korrekt falls "+c.getSaldo() + " == "+(100+7.2));
 		
 	}

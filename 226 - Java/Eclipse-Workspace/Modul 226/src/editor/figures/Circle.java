@@ -1,4 +1,7 @@
-package ab5;
+package editor.figures;
+
+import java.awt.Graphics;
+
 
 public class Circle extends Figure {
 	
@@ -6,7 +9,7 @@ public class Circle extends Figure {
 		super(center, edge);
 	}
 	
-	public Circle (Point center, double radius) {
+	public Circle (Point center, int radius) {
 		this(center, new Point(center).move(radius, 0));
 	}
 	public Circle(String representation) {
@@ -29,9 +32,9 @@ public class Circle extends Figure {
 	public double radius() {
 		return Math.abs(end1.x - end2.x);
 	}
-//	public Figure move(double dx, double dy) {
-//		center().move(dx, dy);
-//		edge().move(dx, 0);
-//		return this;
-//	}
+
+	@Override
+	public void draw(Graphics g) {
+		g.drawOval((int)end1.x, (int) end2.y,(int)( 2*radius()),(int) (2*radius()));
+	}
 }

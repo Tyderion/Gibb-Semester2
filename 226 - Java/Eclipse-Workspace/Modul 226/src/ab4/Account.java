@@ -6,16 +6,13 @@ public class Account {
 	private Customer owner;
 	
 	public Account(Customer owner) {
-		this(0.0,5.0, owner);
+		this(0.0,0.05, owner);
 	}
 	public Account(double interestRate,Customer owner) {
 		this(0.0,interestRate,owner);
 	}
 	public Account(double initial_balance, double interestRate,Customer owner) {
 		this.balance = initial_balance;
-		if (interestRate > 1) {
-			interestRate /= 100; //Make percent
-		}
 		this.interestRate = interestRate;
 		this.owner = owner;
 	}
@@ -25,7 +22,7 @@ public class Account {
 	}
 	
 	public void yieldInterest(int days) {
-		balance += (balance * interestRate*days/365);
+		balance += (balance * interestRate*days/360);
 	}
 	
 	public double getSaldo() {
