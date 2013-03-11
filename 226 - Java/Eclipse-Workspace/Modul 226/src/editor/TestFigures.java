@@ -22,11 +22,11 @@ public class TestFigures {
 		handler.add(new Line(new Point(3,3), new Point(200,250)));
 		handler.add(new Label(new Point(200, 380), "Labeltext"));
 		handler.save();
-		System.out.println(handler.toString());
+//		System.out.println(handler.toString());
 		FigureHandler second = new FigureHandler("Figures.txt");
 		second.load();
-		System.out.println();
-		System.out.println(second.toString());
+//		System.out.println();
+//		System.out.println(second.toString());
 		System.out.println(second.toString().equals(handler.toString()));
 		
 		Drawing d = new Drawing(handler.figures());

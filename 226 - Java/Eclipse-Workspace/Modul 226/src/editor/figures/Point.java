@@ -36,5 +36,5 @@ public class Point {
 		y = Integer.parseInt(values[1]);
 	}
 	
-	
+
 }

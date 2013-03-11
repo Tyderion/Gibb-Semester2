@@ -1,5 +1,8 @@
 package editor;
 
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
+
 import javax.swing.JFrame;
 
 /**
@@ -29,6 +32,27 @@ public class DrawingBoard extends JFrame{
 		setLocation(200, 200);
 		setContentPane(papier);
 		setVisible(true);
+//		addKeyListener(papier);
+		addKeyListener(new KeyAdapter(){
+			public void keyPressed(KeyEvent e) {
+				switch (e.getKeyChar()) {
+				case 'r':
+					papier.setMode(DrawingModes.Rectangle);
+					break;
+				case 's':
+					papier.setMode(DrawingModes.Label);
+					break;
+				case 'l':
+					papier.setMode(DrawingModes.Line);
+
+					break;
+				case 'c':
+				case 'k':
+					papier.setMode(DrawingModes.Circle);
+					break;
+				}
+			}
+		});
 	}
 	
 	/**

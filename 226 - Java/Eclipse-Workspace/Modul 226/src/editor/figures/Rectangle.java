@@ -5,8 +5,8 @@ import java.awt.Graphics;
 
 public class Rectangle extends Figure {
 
-	public Rectangle(Point one, Point two) {
-		super(one, two);
+	public Rectangle(Point left_upper, Point right_lower) {
+		super(left_upper, right_lower);
 	}
 	
 	public Rectangle(String representation) {
@@ -26,9 +26,9 @@ public class Rectangle extends Figure {
 		return Math.abs(end1.x-end2.x);
 	}
 
-
 	@Override
 	public void draw(Graphics g) {
+//		Point anchor = l();
 		g.drawRect(end1.x, end1.y, getWidth() , getHeight() );
 		
 	}

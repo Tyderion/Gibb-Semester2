@@ -35,6 +35,6 @@ public class Circle extends Figure {
 
 	@Override
 	public void draw(Graphics g) {
-		g.drawOval((int)end1.x, (int) end2.y,(int)( 2*radius()),(int) (2*radius()));
+		g.drawOval((int)(end1.x-radius()), (int) (end2.y-radius()),(int)( 2*radius()),(int) (2*radius()));
 	}
 }

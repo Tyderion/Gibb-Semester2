@@ -26,4 +26,8 @@ public class Drawing {
 		}
 	}
 	
+	public void add(Figure f) {
+		figures.add(f);
+	}
+	
 }
