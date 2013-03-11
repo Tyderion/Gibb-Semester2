@@ -11,8 +11,7 @@
   <link rel="stylesheet" href="umfrage.css" type="text/css" />
 </head>
 
-<body text="#000000" bgcolor="#FFFFFF" link="#FF0000" alink=
-"#FF0000" vlink="#FF0000">
+<body>
 <?php // Variables
 $auswahlen =array("ja", "eher <br /> ja", "egal", "eher <br /> nein", "nein");
 $fragen = file("fragen.txt");
@@ -28,7 +27,7 @@ $angaben = array("Anrede", "Vorname", "Nachname", "E-Mail");
           <?php
           foreach ($angaben as $angabe) {
           echo <<<EOT
-            <div align="left">
+            <div>
               <div class="angabe" >
                 $angabe
               </div>
@@ -41,7 +40,7 @@ EOT;
               $i = 0;
               foreach ($anreden as $anrede) {
                 echo <<<EOT
-                <option value=$i selected="selected">
+                <option value=$i>
                   $anrede
                 </option>
 EOT;
@@ -55,16 +54,14 @@ EOT;
 EOT;
           } echo "</div></div>";
           } ?>
-    <table cellspacing="1" cellpadding="1" width="578" border="0">
-      <tbody>
-        <tr class="headerrow" align="left">
-          <td class="norm"><strong>Fragen</strong></td>
+    <table>
+        <tr class="headerrow">
+          <td><strong>Fragen</strong></td>
           <?php
 
           foreach ($auswahlen as $wert) {
             ?>
-             <td class="norm" align="middle">
-            <img height="1" src="empty.gif" width="45" />
+             <td>
             <?php echo $wert ?>
           </td>
     <?php } ?>
@@ -72,15 +69,16 @@ EOT;
         <?php
         $counter = 0;
         foreach ($fragen as $frage) { ?>
-          <tr class="oddrow" align="left">
-            <td class="questiontable">
+          <tr class=<?php echo  $counter % 2 == 0 ? "evenrow" : "oddrow"; ?>
+            >
+            <td class="frage">
             <?php echo $frage; ?>
           </td>
           <?php
           for ($i = 1; $i<=5; $i++)
           {
             ?>
-            <td class="questiontable" align="middle">
+            <td class="selection">
               <input type="radio" value=<?php echo "$i";
               if ($i == 3) echo ' checked="checked"';?>
               name= <?php echo "frage_$counter" ?>
@@ -89,12 +87,6 @@ EOT;
     <?php } $counter++; ?>
         </tr>
   <?php } ?>
-        <!--tr>
-          <td class="norm" align="left"><br />
-          <a href="auswertung1.html">&gt; weiter zu Auswertung
-          PartnerWahl</a></td>
-        </tr-->
-      </tbody>
     </table>
 
   <input type="submit" value = "Weiter zur Auswertung" />
